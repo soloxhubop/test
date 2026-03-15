@@ -1105,6 +1105,60 @@ end)
 
 end -- fine launchMainScript
 
+-- TAUNT Button Functionality
+tauntButtons["TAUNT"].MouseButton1Click:Connect(function()
+    tauntActive = not tauntActive
+    
+    if tauntActive then
+        -- Make button transparent purple when active
+        tauntButtons["TAUNT"].BackgroundColor3 = Color3.fromRGB(130, 80, 255)
+        tauntButtons["TAUNT"].BackgroundTransparency = 0.7
+        
+        -- Start spamming loop
+        tauntLoop = task.spawn(function()
+            while tauntActive do
+                -- Try new TextChatService first (newer Roblox chat)
+                local TextChatService = game:GetService("TextChatService")
+                local success = pcall(function()
+                    local generalChannel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+                    if generalChannel then
+                        generalChannel:SendAsync("/MeloskaOP")
+                    end
+                end)
+                
+                -- Fallback to legacy chat if new chat fails
+                if not success then
+                    pcall(function()
+                        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                        local SayMessageRequest = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+                        if SayMessageRequest then
+                            SayMessageRequest = SayMessageRequest:FindFirstChild("SayMessageRequest")
+                            if SayMessageRequest then
+                                SayMessageRequest:FireServer("/MeloskaOP", "All")
+                            end
+                        end
+                    end)
+                end
+                
+                task.wait(0.5) -- Spam every 0.5 seconds
+            end
+        end)
+        
+        print("Taunt spam ENABLED")
+    else
+        -- Reset button to original style
+        tauntButtons["TAUNT"].BackgroundColor3 = Color3.fromRGB(10, 10, 12)
+        tauntButtons["TAUNT"].BackgroundTransparency = 0.15
+        
+        if tauntLoop then
+            task.cancel(tauntLoop)
+            tauntLoop = nil
+        end
+        
+        print("Taunt spam DISABLED")
+    end
+end)
+
 -- ================================================================
 -- [[ REDEEM + AUTO-CHECK KEY SALVATA ]] --
 -- ================================================================
