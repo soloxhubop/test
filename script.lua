@@ -123,10 +123,7 @@ local DEFAULT_POSITIONS = {
     Float     = UDim2.new(0.5, 10,   1, -155),
     AutoLeft  = UDim2.new(0.5, -230, 1, -155),
     AutoRight = UDim2.new(0.5, -110, 1, -155),
-    Tp        = UDim2.new(0.5, 130,  1, -155),
     Save      = UDim2.new(0,   8,    0, 8),
-    ResetTp   = UDim2.new(0,   96,   0, 8),
-    TpAuto    = UDim2.new(0,   192,  0, 8),
     Lag       = UDim2.new(0.5, 10,   1, -205),
     MenuBtn   = UDim2.new(0.5, -55,  1, -205),
 }
@@ -142,12 +139,6 @@ local R_POS_1      = Vector3.new(-476.16, -6.52, 25.62)
 local R_POS_END    = Vector3.new(-483.04, -5.09, 23.14)
 local R_POS_RETURN = Vector3.new(-476, -8, 99)
 local R_POS_FINAL  = Vector3.new(-488, -6, 102)
-
-local TP_LEFT_1  = Vector3.new(-474, -8, 95)
-local TP_LEFT_2  = Vector3.new(-483, -6, 98)
-local TP_RIGHT_1 = Vector3.new(-473, -8, 25)
-local TP_RIGHT_2 = Vector3.new(-483, -6, 21)
-
 local Connections = {}
 local allButtons = {}
 
@@ -865,62 +856,6 @@ SaveBtn.Position = resolvePosition("Save")
 SaveBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 SaveBtn.BorderSizePixel = 0
 SaveBtn.Text = "ðŸ’¾ SAVE"
-SaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-SaveBtn.Font = Enum.Font.GothamBold
-SaveBtn.TextSize = 11
-SaveBtn.AutoButtonColor = false
-SaveBtn.ZIndex = 5
-Instance.new("UICorner", SaveBtn).CornerRadius = UDim.new(0, 8)
-AddOutline(SaveBtn)
-allButtons["Save"] = SaveBtn
-MakeDraggable(SaveBtn, function()
-    saveConfig()
-    SaveBtn.Text = "âœ” SAVED"
-    SaveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    task.delay(1.5, function()
-        SaveBtn.Text = "ðŸ’¾ SAVE"
-        SaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-    end)
-end)
-
--- [[ RESET TP BUTTON ]] --
-local ResetTpBtn = Instance.new("TextButton", HUDScreen)
-ResetTpBtn.Size = UDim2.new(0, 88, 0, 28)
-ResetTpBtn.Position = resolvePosition("ResetTp")
-ResetTpBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-ResetTpBtn.BorderSizePixel = 0
-ResetTpBtn.Text = "ðŸ”„ TP SIDE"
-ResetTpBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-ResetTpBtn.Font = Enum.Font.GothamBold
-ResetTpBtn.TextSize = 11
-ResetTpBtn.AutoButtonColor = false
-ResetTpBtn.ZIndex = 5
-Instance.new("UICorner", ResetTpBtn).CornerRadius = UDim.new(0, 8)
-AddOutline(ResetTpBtn)
-allButtons["ResetTp"] = ResetTpBtn
-MakeDraggable(ResetTpBtn, function() showTpPicker() end)
-
--- [[ TP AUTO BUTTON ]] --
-local TpAutoBtn = Instance.new("TextButton", HUDScreen)
-TpAutoBtn.Size = UDim2.new(0, 100, 0, 28)
-TpAutoBtn.Position = resolvePosition("TpAuto")
-TpAutoBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-TpAutoBtn.BorderSizePixel = 0
-TpAutoBtn.Text = "TP AUTO\nOFF"
-TpAutoBtn.TextColor3 = Color3.fromRGB(160, 160, 160)
-TpAutoBtn.Font = Enum.Font.GothamBold
-TpAutoBtn.TextSize = 11
-TpAutoBtn.AutoButtonColor = false
-TpAutoBtn.ZIndex = 5
-Instance.new("UICorner", TpAutoBtn).CornerRadius = UDim.new(0, 8)
-AddOutline(TpAutoBtn)
-allButtons["TpAuto"] = TpAutoBtn
-MakeDraggable(TpAutoBtn, function()
-    tpAutoEnabled = not tpAutoEnabled
-    TpAutoBtn.Text = "TP AUTO\n" .. (tpAutoEnabled and "ON" or "OFF")
-    TpAutoBtn.TextColor3 = tpAutoEnabled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(160, 160, 160)
-    TpAutoBtn.BackgroundColor3 = tpAutoEnabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(15, 15, 15)
-end)
 
 -- [[ LAG/FREEZE BUTTON ]] --
 local lagActive = false
