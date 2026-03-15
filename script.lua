@@ -123,10 +123,7 @@ local DEFAULT_POSITIONS = {
     Float     = UDim2.new(0.5, 10,   1, -155),
     AutoLeft  = UDim2.new(0.5, -230, 1, -155),
     AutoRight = UDim2.new(0.5, -110, 1, -155),
-    Tp        = UDim2.new(0.5, 130,  1, -155),
     Save      = UDim2.new(0,   8,    0, 8),
-    ResetTp   = UDim2.new(0,   96,   0, 8),
-    TpAuto    = UDim2.new(0,   192,  0, 8),
     Lag       = UDim2.new(0.5, 10,   1, -205),
     MenuBtn   = UDim2.new(0.5, -55,  1, -205),
 }
@@ -143,10 +140,6 @@ local R_POS_END    = Vector3.new(-483.04, -5.09, 23.14)
 local R_POS_RETURN = Vector3.new(-476, -8, 99)
 local R_POS_FINAL  = Vector3.new(-488, -6, 102)
 
-local TP_LEFT_1  = Vector3.new(-474, -8, 95)
-local TP_LEFT_2  = Vector3.new(-483, -6, 98)
-local TP_RIGHT_1 = Vector3.new(-473, -8, 25)
-local TP_RIGHT_2 = Vector3.new(-483, -6, 21)
 
 local Connections = {}
 local allButtons = {}
@@ -759,105 +752,8 @@ local AutoRightHUD, setAutoRightState = MakeHUDButton("AutoRight", "AUTO RIGHT �
 end)
 
 -- [[ TP BUTTON ]] --
-local TpHUD = Instance.new("TextButton", HUDScreen)
-TpHUD.Size = UDim2.new(0, 110, 0, 38)
-TpHUD.Position = resolvePosition("Tp")
-TpHUD.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-TpHUD.BorderSizePixel = 0
-TpHUD.Font = Enum.Font.GothamBold
-TpHUD.TextSize = 11
-TpHUD.AutoButtonColor = false
-TpHUD.ZIndex = 5
-Instance.new("UICorner", TpHUD).CornerRadius = UDim.new(0, 8)
-AddOutline(TpHUD)
-allButtons["Tp"] = TpHUD
 
-local function updateTpButton()
-    if tpSide == "LEFT" then
-        TpHUD.Text = "TP LEFT\nâ–º CLICK"
-        TpHUD.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    elseif tpSide == "RIGHT" then
-        TpHUD.Text = "TP RIGHT\nâ–º CLICK"
-        TpHUD.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    else
-        TpHUD.Text = "TP\nNOT SET"
-        TpHUD.TextColor3 = Color3.fromRGB(160, 160, 160)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    end
-end
-
-MakeDraggable(TpHUD, function()
-    if not tpSide then return end
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    if not hrp then return end
-    task.spawn(function()
-        if tpSide == "LEFT" then
-            hrp.CFrame = CFrame.new(TP_LEFT_1); task.wait(0.12); hrp.CFrame = CFrame.new(TP_LEFT_2)
-        elseif tpSide == "RIGHT" then
-            hrp.CFrame = CFrame.new(TP_RIGHT_1); task.wait(0.12); hrp.CFrame = CFrame.new(TP_RIGHT_2)
-        end
-    end)
-end)
-
--- [[ TP PICKER ]] --
-local function showTpPicker()
-    if CoreGui:FindFirstChild("BS_TpPicker") then CoreGui.BS_TpPicker:Destroy() end
-    local pickerGui = Instance.new("ScreenGui", CoreGui)
-    pickerGui.Name = "BS_TpPicker"
-    pickerGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    local bg = Instance.new("Frame", pickerGui)
-    bg.Size = UDim2.new(0, 240, 0, 110)
-    bg.Position = UDim2.new(0.5, -120, 0.5, -55)
-    bg.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    bg.BorderSizePixel = 0
-    bg.ZIndex = 5
-    Instance.new("UICorner", bg).CornerRadius = UDim.new(0, 8)
-    AddOutline(bg)
-    local title = Instance.new("TextLabel", bg)
-    title.Size = UDim2.new(1, 0, 0, 30)
-    title.Text = "PICK TP SIDE"
-    title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    title.Font = Enum.Font.GothamBold
-    title.TextSize = 13
-    title.BackgroundTransparency = 1
-    title.ZIndex = 6
-    local function makePickBtn(text, xOffset, side)
-        local btn = Instance.new("TextButton", bg)
-        btn.Size = UDim2.new(0, 100, 0, 38)
-        btn.Position = UDim2.new(0, xOffset, 0, 38)
-        btn.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-        btn.BorderSizePixel = 0
-        btn.Text = text
-        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-        btn.Font = Enum.Font.GothamBold
-        btn.TextSize = 12
-        btn.AutoButtonColor = false
-        btn.ZIndex = 6
-        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
-        AddOutline(btn)
-        btn.MouseButton1Click:Connect(function()
-            tpSide = side; updateTpButton(); saveConfig(); pickerGui:Destroy()
-        end)
-    end
-    makePickBtn("â—€ TP LEFT", 10, "LEFT")
-    makePickBtn("TP RIGHT â–¶", 130, "RIGHT")
-    local skipBtn = Instance.new("TextButton", bg)
-    skipBtn.Size = UDim2.new(1, -20, 0, 20)
-    skipBtn.Position = UDim2.new(0, 10, 0, 84)
-    skipBtn.BackgroundTransparency = 1
-    skipBtn.BorderSizePixel = 0
-    skipBtn.Text = "skip"
-    skipBtn.TextColor3 = Color3.fromRGB(120, 120, 120)
-    skipBtn.Font = Enum.Font.Gotham
-    skipBtn.TextSize = 10
-    skipBtn.AutoButtonColor = false
-    skipBtn.ZIndex = 6
-    skipBtn.MouseButton1Click:Connect(function() pickerGui:Destroy() end)
-end
-
+    
 -- [[ SAVE BUTTON ]] --
 local SaveBtn = Instance.new("TextButton", HUDScreen)
 SaveBtn.Size = UDim2.new(0, 80, 0, 28)
