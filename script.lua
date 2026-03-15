@@ -1102,11 +1102,9 @@ local function applyLoadedState()
     if SETTINGS.AUTORIGHT then setAutoRightState(true) end
     updateCircleVisual()
     rInput.Text = "R: " .. SETTINGS.RADIUS
-    updateTpButton()
     if SETTINGS.SPIN_ENABLED then applySpin() end
 end
 applyLoadedState()
-if not tpSide then showTpPicker() end
 
 -- [[ MAIN LOOP ]] --
 RunService.Heartbeat:Connect(function()
