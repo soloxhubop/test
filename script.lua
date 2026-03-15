@@ -74,7 +74,7 @@ AddOutline(TitleBox)
 local TitleLabel = Instance.new("TextLabel", TitleBox)
 TitleLabel.Size = UDim2.new(1, 0, 1, 0)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.Text = "BS V2 DUEL"
+TitleLabel.Text = "Meloska DUEL"
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.Font = Enum.Font.GothamBold
 TitleLabel.TextSize = 13
@@ -747,12 +747,12 @@ local FloatHUD, setFloatState = MakeHUDButton("Float", "FLOAT", function(on)
     SETTINGS.FLOAT = on
     if not on and floatPart then floatPart:Destroy(); floatPart = nil end
 end)
-local AutoLeftHUD, setAutoLeftState = MakeHUDButton("AutoLeft", "â—€ AUTO LEFT", function(on)
+local AutoLeftHUD, setAutoLeftState = MakeHUDButton("AutoLeft", ">AUTO LEFT", function(on)
     SETTINGS.AUTOLEFT = on
     if on then SETTINGS.AUTORIGHT = false; RightPhase, RightStartPos = 1, nil end
     LeftPhase = 1; LeftStartPos = nil
 end)
-local AutoRightHUD, setAutoRightState = MakeHUDButton("AutoRight", "AUTO RIGHT â–¶", function(on)
+local AutoRightHUD, setAutoRightState = MakeHUDButton("AutoRight", "AUTO RIGHT<", function(on)
     SETTINGS.AUTORIGHT = on
     if on then SETTINGS.AUTOLEFT = false; LeftPhase, LeftStartPos = 1, nil end
     RightPhase = 1; RightStartPos = nil
@@ -823,7 +823,7 @@ SaveBtn.Size = UDim2.new(0, 80, 0, 28)
 SaveBtn.Position = resolvePosition("Save")
 SaveBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 SaveBtn.BorderSizePixel = 0
-SaveBtn.Text = "ðŸ’¾ SAVE"
+SaveBtn.Text = "SAVE"
 SaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
 SaveBtn.Font = Enum.Font.GothamBold
 SaveBtn.TextSize = 11
@@ -834,10 +834,10 @@ AddOutline(SaveBtn)
 allButtons["Save"] = SaveBtn
 MakeDraggable(SaveBtn, function()
     saveConfig()
-    SaveBtn.Text = "âœ” SAVED"
+    SaveBtn.Text = "☑️SAVED"
     SaveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
     task.delay(1.5, function()
-        SaveBtn.Text = "ðŸ’¾ SAVE"
+        SaveBtn.Text = "SAVE"
         SaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
     end)
 end)
@@ -845,26 +845,6 @@ end)
 -- [[ RESET TP BUTTON ]] --
 
 -- [[ TP AUTO BUTTON ]] --
-local TpAutoBtn = Instance.new("TextButton", HUDScreen)
-TpAutoBtn.Size = UDim2.new(0, 100, 0, 28)
-TpAutoBtn.Position = resolvePosition("TpAuto")
-TpAutoBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-TpAutoBtn.BorderSizePixel = 0
-TpAutoBtn.Text = "TP AUTO\nOFF"
-TpAutoBtn.TextColor3 = Color3.fromRGB(160, 160, 160)
-TpAutoBtn.Font = Enum.Font.GothamBold
-TpAutoBtn.TextSize = 11
-TpAutoBtn.AutoButtonColor = false
-TpAutoBtn.ZIndex = 5
-Instance.new("UICorner", TpAutoBtn).CornerRadius = UDim.new(0, 8)
-AddOutline(TpAutoBtn)
-allButtons["TpAuto"] = TpAutoBtn
-MakeDraggable(TpAutoBtn, function()
-    tpAutoEnabled = not tpAutoEnabled
-    TpAutoBtn.Text = "TP AUTO\n" .. (tpAutoEnabled and "ON" or "OFF")
-    TpAutoBtn.TextColor3 = tpAutoEnabled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(160, 160, 160)
-    TpAutoBtn.BackgroundColor3 = tpAutoEnabled and Color3.fromRGB(40, 40, 40) or Color3.fromRGB(15, 15, 15)
-end)
 
 -- [[ LAG/FREEZE BUTTON ]] --
 local lagActive = false
@@ -903,7 +883,7 @@ MenuBtn.Size = UDim2.new(0, 110, 0, 38)
 MenuBtn.Position = resolvePosition("MenuBtn")
 MenuBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
 MenuBtn.BorderSizePixel = 0
-MenuBtn.Text = "â˜° MENU"
+MenuBtn.Text = "MENU"
 MenuBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
 MenuBtn.Font = Enum.Font.GothamBold
 MenuBtn.TextSize = 12
@@ -933,7 +913,7 @@ local function buildMenuPanel()
     local panelTitle = Instance.new("TextLabel", panel)
     panelTitle.Size = UDim2.new(1, 0, 0, 32)
     panelTitle.BackgroundTransparency = 1
-    panelTitle.Text = "BS V2 MENU"
+    panelTitle.Text = "Meloska MENU"
     panelTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
     panelTitle.Font = Enum.Font.GothamBold
     panelTitle.TextSize = 13
@@ -944,7 +924,7 @@ local function buildMenuPanel()
     closeBtn.Position = UDim2.new(1, -32, 0, 2)
     closeBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     closeBtn.BorderSizePixel = 0
-    closeBtn.Text = "âœ•"
+    closeBtn.Text = "X"
     closeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
     closeBtn.Font = Enum.Font.GothamBold
     closeBtn.TextSize = 12
@@ -954,7 +934,7 @@ local function buildMenuPanel()
     closeBtn.MouseButton1Click:Connect(function()
         menuOpen = false
         panelGui:Destroy(); menuPanel = nil
-        MenuBtn.Text = "â˜° MENU"
+        MenuBtn.Text = "MENU"
         MenuBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
         MenuBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
     end)
@@ -1052,7 +1032,7 @@ local function buildMenuPanel()
     menuSaveBtn.Position = UDim2.new(0, 10, 0, yOff)
     menuSaveBtn.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
     menuSaveBtn.BorderSizePixel = 0
-    menuSaveBtn.Text = "ðŸ’¾ SAVE MENU CONFIG"
+    menuSaveBtn.Text = "SAVE MENU CONFIG"
     menuSaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
     menuSaveBtn.Font = Enum.Font.GothamBold
     menuSaveBtn.TextSize = 11
@@ -1062,11 +1042,11 @@ local function buildMenuPanel()
     AddOutline(menuSaveBtn)
     menuSaveBtn.MouseButton1Click:Connect(function()
         saveMenuConfig()
-        menuSaveBtn.Text = "âœ” SAVED"
+        menuSaveBtn.Text = "☑️SAVED"
         menuSaveBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
         menuSaveBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
         task.delay(1.5, function()
-            menuSaveBtn.Text = "ðŸ’¾ SAVE MENU CONFIG"
+            menuSaveBtn.Text = "SAVE MENU CONFIG"
             menuSaveBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
             menuSaveBtn.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
         end)
@@ -1079,12 +1059,12 @@ end
 MakeDraggable(MenuBtn, function()
     menuOpen = not menuOpen
     if menuOpen then
-        MenuBtn.Text = "â˜° MENU\nOPEN"
+        MenuBtn.Text = "MENU\nOPEN"
         MenuBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
         MenuBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
         buildMenuPanel()
     else
-        MenuBtn.Text = "â˜° MENU"
+        MenuBtn.Text = "MENU"
         MenuBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
         MenuBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
         if menuPanel then menuPanel:Destroy(); menuPanel = nil end
