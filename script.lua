@@ -759,48 +759,7 @@ local AutoRightHUD, setAutoRightState = MakeHUDButton("AutoRight", "AUTO RIGHT �
 end)
 
 -- [[ TP BUTTON ]] --
-local TpHUD = Instance.new("TextButton", HUDScreen)
-TpHUD.Size = UDim2.new(0, 110, 0, 38)
-TpHUD.Position = resolvePosition("Tp")
-TpHUD.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-TpHUD.BorderSizePixel = 0
-TpHUD.Font = Enum.Font.GothamBold
-TpHUD.TextSize = 11
-TpHUD.AutoButtonColor = false
-TpHUD.ZIndex = 5
-Instance.new("UICorner", TpHUD).CornerRadius = UDim.new(0, 8)
-AddOutline(TpHUD)
-allButtons["Tp"] = TpHUD
 
-local function updateTpButton()
-    if tpSide == "LEFT" then
-        TpHUD.Text = "TP LEFT\nâ–º CLICK"
-        TpHUD.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    elseif tpSide == "RIGHT" then
-        TpHUD.Text = "TP RIGHT\nâ–º CLICK"
-        TpHUD.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    else
-        TpHUD.Text = "TP\nNOT SET"
-        TpHUD.TextColor3 = Color3.fromRGB(160, 160, 160)
-        TpHUD.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-    end
-end
-
-MakeDraggable(TpHUD, function()
-    if not tpSide then return end
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    if not hrp then return end
-    task.spawn(function()
-        if tpSide == "LEFT" then
-            hrp.CFrame = CFrame.new(TP_LEFT_1); task.wait(0.12); hrp.CFrame = CFrame.new(TP_LEFT_2)
-        elseif tpSide == "RIGHT" then
-            hrp.CFrame = CFrame.new(TP_RIGHT_1); task.wait(0.12); hrp.CFrame = CFrame.new(TP_RIGHT_2)
-        end
-    end)
-end)
 
 -- [[ TP PICKER ]] --
 local function showTpPicker()
@@ -884,21 +843,6 @@ MakeDraggable(SaveBtn, function()
 end)
 
 -- [[ RESET TP BUTTON ]] --
-local ResetTpBtn = Instance.new("TextButton", HUDScreen)
-ResetTpBtn.Size = UDim2.new(0, 88, 0, 28)
-ResetTpBtn.Position = resolvePosition("ResetTp")
-ResetTpBtn.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-ResetTpBtn.BorderSizePixel = 0
-ResetTpBtn.Text = "ðŸ”„ TP SIDE"
-ResetTpBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-ResetTpBtn.Font = Enum.Font.GothamBold
-ResetTpBtn.TextSize = 11
-ResetTpBtn.AutoButtonColor = false
-ResetTpBtn.ZIndex = 5
-Instance.new("UICorner", ResetTpBtn).CornerRadius = UDim.new(0, 8)
-AddOutline(ResetTpBtn)
-allButtons["ResetTp"] = ResetTpBtn
-MakeDraggable(ResetTpBtn, function() showTpPicker() end)
 
 -- [[ TP AUTO BUTTON ]] --
 local TpAutoBtn = Instance.new("TextButton", HUDScreen)
