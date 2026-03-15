@@ -759,7 +759,7 @@ local AutoRightHUD, setAutoRightState = MakeHUDButton("AutoRight", "AUTO RIGHT Ã
 end)
 
 -- [[ TP BUTTON ]] --
-
+local function updateTpButton() end
 
 -- [[ TP PICKER ]] --
 local function showTpPicker()
